@@ -8149,7 +8149,10 @@
   ],
   "continent": "UEFA",
   "country": "France",
+  "credit": 200000000,
   "id": "FR1",
   "marketValue": "\u20ac3.50bn",
-  "name": "Ligue 1"
+  "name": "Ligue 1",
+  "numberBoosters": 4,
+  "picksPerBooster": 3
 }

@@ -1,0 +1,123 @@
+/* Add CSS styles for current player section */
+.current-user {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+.user1 {
+    color: red;
+    font-weight: bold;
+}
+.user2 {
+    color: blue;
+    font-weight: bold;
+}
+/* Add CSS styles for user picks tables */
+.user-picks {
+    margin-top: 20px;
+}
+table {
+    border-collapse: collapse;
+    width: 95%;
+}
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+}
+tr.pickedByUser1 {
+    background-color: pink;
+}
+tr.pickedByUser2 {
+    background-color: lightblue;
+}
+tr.playerHighlight {
+    background-color: lightgreen;
+}
+.column-2 {
+    float: left;
+    width: 50%;
+    text-align: center;
+    margin: 0 auto;
+}
+.column-3 {
+    float: left;
+    width: 33.33%;
+    text-align: center;
+    margin: 0 auto;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.footballField {
+    position: relative;
+    text-align: center;
+    height: 491px;
+    width: 325px;
+    overflow: hidden;
+    background-color:white;
+    margin: 0 auto;
+    font-size: 20px;
+}
+.gk-position {
+position:absolute; left:140px; top:430px;
+}
+.rb-position {
+position:absolute; left:255px; top:350px;
+}
+.cb-position {
+position:absolute; left:140px; top:350px;
+}
+.lb-position {
+position:absolute; left:25px; top:350px;
+}
+.dm-position {
+position:absolute; left:140px; top:285px;
+}
+.rm-position {
+position:absolute; left:255px; top:220px;
+}
+.cm-position {
+position:absolute; left:140px; top:220px;
+}
+.lm-position {
+position:absolute; left:25px; top:220px;
+}
+.am-position {
+position:absolute; left:140px; top:150px;
+}
+.rw-position {
+position:absolute; left:255px; top:95px;
+}
+.lw-position {
+position:absolute; left:25px; top:95px;
+}
+.cf-position {
+position:absolute; left:140px; top:60px;
+}
+
+/* The snackbar - position it at the bottom and in the middle of the screen */
+#snackbar {
+    visibility: hidden; /* Hidden by default. Visible on click */
+    min-width: 250px; /* Set a default minimum width */
+    margin-left: -125px; /* Divide value of min-width by 2 */
+    background-color: #333; /* Black background color */
+    color: #fff; /* White text color */
+    text-align: center; /* Centered text */
+    border-radius: 2px; /* Rounded borders */
+    padding: 3px; /* Padding */
+    position: fixed; /* Sit on top of the screen */
+    z-index: 1; /* Add a z-index if needed */
+    left: 50%; /* Center the snackbar */
+    top: 1px; /* 30px from the top */
+}
+
+/* Show the snackbar when clicking on a button (class added with JavaScript) */
+#snackbar.show {
+    visibility: visible; /* Show the snackbar */
+}

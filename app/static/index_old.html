@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Competition Players</title>
+  <style>
+    /* Add CSS styles for current player section */
+    .current-user {
+      font-weight: bold;
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    .user1 {
+      color: red;
+      font-weight: bold;
+    }
+    .user2 {
+      color: blue;
+      font-weight: bold;
+    }
+    /* Add CSS styles for user picks tables */
+    .user-picks {
+      margin-top: 20px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 95%;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+      text-align: left;
+    }
+    .column-2 {
+      float: left;
+      width: 50%;
+      text-align: center;
+      margin: 0 auto;
+    }
+    .column-3 {
+      float: left;
+      width: 33.33%;
+      text-align: center;
+      margin: 0 auto;
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+
+    .footballField {
+      position: relative;
+      text-align: center;
+      height: 491px;
+      width: 325px;
+      overflow: hidden;
+      background-color:white;
+      margin: 0 auto;
+      font-size: 20px;
+    }
+
+    /* The snackbar - position it at the bottom and in the middle of the screen */
+    #snackbar {
+      visibility: hidden; /* Hidden by default. Visible on click */
+      min-width: 250px; /* Set a default minimum width */
+      margin-left: -125px; /* Divide value of min-width by 2 */
+      background-color: #333; /* Black background color */
+      color: #fff; /* White text color */
+      text-align: center; /* Centered text */
+      border-radius: 2px; /* Rounded borders */
+      padding: 3px; /* Padding */
+      position: fixed; /* Sit on top of the screen */
+      z-index: 1; /* Add a z-index if needed */
+      left: 50%; /* Center the snackbar */
+      top: 1px; /* 30px from the top */
+    }
+
+    /* Show the snackbar when clicking on a button (class added with JavaScript) */
+    #snackbar.show {
+      visibility: visible; /* Show the snackbar */
+    }
+  </style>
+</head>
+<body>
+  <div id="snackbar"></div>
+  <div id="dashboardView">
+    <div class="row">
+      <div class="column-2">
+        <button id="newDraftButton">New Draft</button>
+      </div>
+      <div class="column-2">
+        <div>
+          <input id="loadDraftTeamId">
+          <button id="loadDraftButton">Load Draft</button>
+        </div>
+        <table id="previousDrafts">
+        </table>
+      </div>
+    </div>
+  </div>
+  <div id="draftView" style="display: none;">
+    <button id="leaveDraftButton">Leave Draft</button>
+    <div class="row">
+      <div id="userPicksUser1" class="user-picks column-3">
+        <h2 class="user1">User 1 Picks</h2>
+        <div id="teamIdUser1" class="user1">Team ID: </div>
+        <div id="teamSizeUser1" class="user1">Team size: 0</div>
+        <div id="creditUser1" class="user1">Credit: 0</div>
+        <div id="footballFieldUser1" class="footballField">
+          <img src="field.png" decoding="async" width="100%" height="100%" data-file-width="452" data-file-height="684">
+          <div id="playerPositionsUser1">
+            <div id="gkUser1" style="position:absolute; left:140px; top:430px;">GK: 0</div>
+            <div id="rbUser1" style="position:absolute; left:255px; top:350px;">RB: 0</div>
+            <div id="cbUser1" style="position:absolute; left:140px; top:350px;">CB: 0</div>
+            <div id="lbUser1" style="position:absolute; left:25px; top:350px;">LB: 0</div>
+            <div id="dmUser1" style="position:absolute; left:140px; top:285px;">DM: 0</div>
+            <div id="rmUser1" style="position:absolute; left:255px; top:220px;">RM: 0</div>
+            <div id="cmUser1" style="position:absolute; left:140px; top:220px;">CM: 0</div>
+            <div id="lmUser1" style="position:absolute; left:25px; top:220px;">LM: 0</div>
+            <div id="amUser1" style="position:absolute; left:140px; top:150px;">AM: 0</div>
+            <div id="rwUser1" style="position:absolute; left:255px; top:95px;">RW: 0</div>
+            <div id="lwUser1" style="position:absolute; left:25px; top:95px;">LW: 0</div>
+            <div id="cfUser1" style="position:absolute; left:140px; top:60px;">CF: 0</div>
+          </div>
+        </div>
+        <table id="pickTableUser1">
+        </table>
+      </div>
+  
+      <div id="playerSelection" class="column-3">
+        <h1 id="boosterTitle">Booster ?/?</h1>
+        <div class="current-user" id="currentUserSection">
+          <span id="currentUser"></span>
+        </div>
+        <table id="playersTable">
+        </table>
+      </div>
+  
+      <div id="draftReport" class="column-3" style="display: none;">
+        <h1>Draft complete!</h1>
+        <div>
+          <h3>Average Market Value</h3>
+          <div class="row">
+            <div class="column-2 user1" id="averageMarketValueUser1"></div>
+            <div class="column-2 user2" id="averageMarketValueUser2"></div>
+          </div>
+        </div>
+        <div>
+          <h3>Highest Market Value</h3>
+          <div class="row">
+            <div class="column-2 user1" id="highestMarketValueUser1"></div>
+            <div class="column-2 user2" id="highestMarketValueUser2"></div>
+          </div>
+        </div>
+        <div>
+          <h3>Lowest Market Value</h3>
+          <div class="row">
+            <div class="column-2 user1" id="lowestMarketValueUser1"></div>
+            <div class="column-2 user2" id="lowestMarketValueUser2"></div>
+          </div>
+        </div>
+      </div>
+  
+      <div id="userPicksUser2" class="user-picks column-3">
+        <h2 class="user2">User 2 Picks</h2>
+        <div id="teamIdUser2" class="user2">Team ID: </div>
+        <div id="teamSizeUser2" class="user2">Team size: 0</div>
+        <div id="creditUser2" class="user2">Credit: 0</div>
+        <div id="footballFieldUser2" class="footballField">
+          <img src="field.png" decoding="async" width="100%" height="100%" data-file-width="452" data-file-height="684">
+          <div id="playerPositionsUser2">
+            <div id="gkUser2" style="position:absolute; left:140px; top:430px;">GK: 0</div>
+            <div id="rbUser2" style="position:absolute; left:255px; top:350px;">RB: 0</div>
+            <div id="cbUser2" style="position:absolute; left:140px; top:350px;">CB: 0</div>
+            <div id="lbUser2" style="position:absolute; left:25px; top:350px;">LB: 0</div>
+            <div id="dmUser2" style="position:absolute; left:140px; top:285px;">DM: 0</div>
+            <div id="rmUser2" style="position:absolute; left:255px; top:220px;">RM: 0</div>
+            <div id="cmUser2" style="position:absolute; left:140px; top:220px;">CM: 0</div>
+            <div id="lmUser2" style="position:absolute; left:25px; top:220px;">LM: 0</div>
+            <div id="amUser2" style="position:absolute; left:140px; top:150px;">AM: 0</div>
+            <div id="rwUser2" style="position:absolute; left:255px; top:95px;">RW: 0</div>
+            <div id="lwUser2" style="position:absolute; left:25px; top:95px;">LW: 0</div>
+            <div id="cfUser2" style="position:absolute; left:140px; top:60px;">CF: 0</div>
+          </div>
+        </div>
+        <table id="pickTableUser2">
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
