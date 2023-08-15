@@ -1,3 +1,4 @@
+import asyncio
 from fastapi import FastAPI, Request, WebSocket, WebSocketDisconnect
 from fastapi.staticfiles import StaticFiles
 import os
@@ -52,8 +53,10 @@ async def websocket_endpoint(websocket: WebSocket, team_id: str):
     await app.state.ws_manager.connect(team_id, websocket)
     try:
         while True:
+            await asyncio.sleep(5)
+            await app.state.ws_manager.send_message({"type": "ping"}, team_id)
             await app.state.ws_manager.receive_message(team_id)
-    except WebSocketDisconnect:
+    except Exception:
         print(f"ws for {team_id} disconnected")
         app.state.ws_manager.disconnect(team_id)
 
@@ -78,5 +81,5 @@ async def select_player(playerPick: PlayerPick, request: Request) -> Draft:
     draft = draft_service.pick_player(team_id=playerPick.teamId, player_id=playerPick.playerId, redis=request.app.state.redis)
     clean_draft = draft_service.clean_draft_for_users(draft)
     for team in clean_draft.teams:
-        await app.state.ws_manager.send_message({"type": "draftUpdate", "content": clean_draft.model_dump_json()}, team.id)
+        await request.app.state.ws_manager.send_message({"type": "draftUpdate", "content": clean_draft.model_dump_json()}, team.id)
     return clean_draft
