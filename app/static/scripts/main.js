@@ -25,15 +25,19 @@ const App = () => {
     if (ws === null && localTeamId() !== null) {
       console.log(`New loacalTeamId ${localTeamId()}, openning websocket`);
       ws = {
-        connection: new WebSocket(`ws://localhost:8080/ws/${localTeamId()}`),
+        connection: new WebSocket(`wss://draughtitzv3uetb6-draught-it-v1.functions.fnc.fr-par.scw.cloud/ws/${localTeamId()}`),
         teamId: localTeamId(),
       };
       ws.connection.onmessage = function(event) {
-        console.log(`Received ws message: ${event.data}`);
+        console.log("Received ws message");
         const data = JSON.parse(event.data);
         if (data.type === "draftUpdate") {
+          const newDraftData = JSON.parse(data.content);
+          console.log(`Updating draft data with ${newDraftData}`);
           setDraftData(null);
-          setDraftData(JSON.parse(data.content));
+          setDraftData(newDraftData);
+        } else {
+          console.log(`Unknown message: ${event.data}`);
         }
       };
     }
