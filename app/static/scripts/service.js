@@ -1,3 +1,11 @@
+export const getWsInfo = () => {
+  return fetch("/ws")
+    .then(response => response.json())
+    .catch(error => {
+      console.error("Error fetching data:", error);
+    });
+}
+
 export const newDraft = () => {
   return fetch("/draft", {
     method: "POST",

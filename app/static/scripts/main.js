@@ -1,22 +1,25 @@
 import { createSignal, createEffect } from "https://cdn.skypack.dev/solid-js";
 import { render } from "https://cdn.skypack.dev/solid-js/web";
 import html from "https://cdn.skypack.dev/solid-js/html";
+import { getWsInfo } from "./service.js";
 import { ToastComponent } from "./toast.js";
 import { DashboardComponent } from "./dashboard.js";
 import { DraftComponent } from "./draftView/draft.js";
 
 var ws = null;
+var wsUrl = null;
+getWsInfo().then(wsData => wsUrl = wsData.url);
+
 const newWebSocket = (localTeamId, setDraftData) => {
   ws = {
-    // connection: new WebSocket(`wss://draughtitzv3uetb6-draught-it-v1.functions.fnc.fr-par.scw.cloud/ws/${localTeamId}`),
-    connection: new WebSocket(`ws://localhost:8080/ws/${localTeamId}`),
+    connection: new WebSocket(`${wsUrl}/ws/${localTeamId}`),
     teamId: localTeamId,
   };
   ws.connection.onerror = (event) => {
     console.log(`WS connection failed: ${event.data}`);
   };
   ws.connection.onopen = () => {
-    console.log("WS connection succefully opened");
+    console.log(`WS connection succefully opened on ${wsUrl}/ws/${localTeamId}`);
   };
   ws.connection.onclose = () => {
     console.log("WS connection closed");
